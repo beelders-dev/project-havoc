@@ -34,13 +34,20 @@ export class Game extends Phaser.Scene {
     this.scoreText.setFontFamily("'Press Start 2P'");
 
     this.bottomRightTexts = this.add
-      .text(this.scale.width - 10, this.scale.height - 10, ["P - Pause/Resume", "Right Arrow Key - Move Right", "Left Arrow Key - Move Left"], {
-        fontSize: "16px",
-        fill: "#fff",
-      })
-      .setOrigin(1, 1); 
-
-
+      .text(
+        this.scale.width - 10,
+        this.scale.height - 10,
+        [
+          "P - Pause/Resume",
+          "Right Arrow Key - Move Right",
+          "Left Arrow Key - Move Left",
+        ],
+        {
+          fontSize: "12px",
+          fill: "#fff",
+        }
+      )
+      .setOrigin(1, 1);
 
     this.lives = 5;
     this.livesGroup = this.add.group();
@@ -166,7 +173,7 @@ export class Game extends Phaser.Scene {
           10
         );
         this.mobGroup.add(dorque);
-        dorque.setVelocityY(80);
+        dorque.setVelocityY(90);
 
         if (this.score > 200) {
           if (!(Math.random() < 0.5)) return;
@@ -175,10 +182,10 @@ export class Game extends Phaser.Scene {
             Phaser.Math.Between(50, this.scale.width - 50),
             y,
             "dorqueRed",
-            20
+            30
           );
           this.mobGroup.add(dorqueRed);
-          dorqueRed.setVelocityY(100);
+          dorqueRed.setVelocityY(120);
         }
 
         if (this.score > 1200) {
@@ -188,10 +195,10 @@ export class Game extends Phaser.Scene {
             Phaser.Math.Between(50, this.scale.width - 50),
             y,
             "dorquePurple",
-            30
+            50
           );
           this.mobGroup.add(dorquePurple);
-          dorquePurple.setVelocityY(160);
+          dorquePurple.setVelocityY(180);
         }
       },
     });

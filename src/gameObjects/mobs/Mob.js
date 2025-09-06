@@ -4,8 +4,6 @@ export class Mob extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-   
-
     this.health = health;
     this.isDead = false;
     this.flyAnim = `${texture}_fly`;
@@ -17,7 +15,15 @@ export class Mob extends Phaser.Physics.Arcade.Sprite {
 
   takeDamage(amount) {
     this.health -= amount;
- 
+
+    this.scene.tweens.add({
+      targets: this,
+      tint: { from: 0xffffff, to: 0x0000ff },
+      duration: 50,
+      yoyo: true,
+      repeat: 1,
+    });
+
     if (this.health <= 0) {
       this.setIsDead(true);
       this.scene.sound.play("mobDeath");
@@ -36,9 +42,7 @@ export class Mob extends Phaser.Physics.Arcade.Sprite {
     this.play(this.flyAnim);
   }
 
-
   setIsDead(bool) {
     this.isDead = bool;
   }
-
 }
