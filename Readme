@@ -1,0 +1,15 @@
+September 1 & 2
+Learning Phaser.
+Built the example game through the tutorial from Phaser's Documentation
+
+Day 1: Sep 3
+Tried to create from scratch using Vite/ Vanilla JS.
+Installed Phaser Library
+used Copilot to create generate the spacecraft I named Velox (Latin for speed)
+I also used Copilot to generate a picture of a galaxy as the background.
+I made the ship movable in X axis using the Left and Right arrow keys.
+
+Day 2:
+Spent time creating the Fire blaster weapon and learned abstracting. For the sprite, I used Copilot as well.
+I learned to create sprites in Piskel. It was so easy. I created the first mob which I named "Dorque". 
+I also created the score system. Phaser is a game changer. If find it very easy to make a functionality such as the scoring system through classes.
