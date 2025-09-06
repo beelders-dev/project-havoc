@@ -8,9 +8,28 @@ export class Game extends Phaser.Scene {
   }
 
   create() {
-    const bg = this.add.image(0, 0, "space").setOrigin(0, 0);
-    bg.displayWidth = this.sys.canvas.width;
-    bg.displayHeight = this.sys.canvas.height;
+    // const bg = this.add.image(0, 0, "space").setOrigin(0, 0);
+    // bg.displayWidth = this.sys.canvas.width;
+    // bg.displayHeight = this.sys.canvas.height;
+
+    const graphics = this.make.graphics({ x: 0, y: 0, add: false });
+    graphics.fillStyle(0xffffff, 1); 
+    graphics.fillCircle(1, 2, 2); 
+    graphics.generateTexture("star", 2, 2); 
+
+    const stars = this.add.group({
+      key: "star",
+      repeat: 50, // total stars = repeat + 1
+      setXY: { x: 0, y: 0, stepX: 8 }, // initial layout
+    });
+
+    stars.children.iterate((star) => {
+      star.y = Phaser.Math.Between(0, this.scale.height);
+      star.x = Phaser.Math.Between(0, this.scale.width);
+      star.speed = Phaser.Math.Between(0, 1); // pixels per frame
+    });
+
+    this.stars = stars; // save group to access in update
 
     this.level = 1;
     this.score = 0;
@@ -53,7 +72,6 @@ export class Game extends Phaser.Scene {
     this.handleMobHitPlayer();
 
     this.fireBlasterCollision();
-    this.novaCoreCollision();
 
     this.beams = this.add.group();
   }
@@ -87,17 +105,6 @@ export class Game extends Phaser.Scene {
     );
   }
 
-  novaCoreCollision() {
-    this.physics.add.overlap(
-      this.itemGroup,
-      this.player,
-      (item, playerSprite) => {
-        item.applyEffect(this.player);
-        item.destroy();
-      }
-    );
-  }
-
   initPlayerLives() {
     for (let i = 0; i < this.lives; i++) {
       const heart = this.add.image(20 + i * 40, 50, "life");
@@ -120,10 +127,10 @@ export class Game extends Phaser.Scene {
 
   spawnItem() {
     const y = this.Y_AXIS;
-    const second = 60;
+    const second = 30; //every 20 seconds
     this.spawnEvent = this.time.addEvent({
-      // delay: 1000 * second,
-      delay: 1500,
+      delay: 1000 * second,
+
       loop: true,
       callback: () => {
         const core = new NovaCore(
@@ -133,11 +140,11 @@ export class Game extends Phaser.Scene {
           "nova_core"
         );
 
-        core.setVelocityY(200);
+        core.setVelocityY(100);
 
         this.physics.add.overlap(core, this.player, () => {
           core.applyEffect(this.player.fireBlaster);
-          core.destroy;
+          core.disableBody(true, true);
         });
       },
     });
@@ -172,17 +179,40 @@ export class Game extends Phaser.Scene {
           this.mobGroup.add(dorqueRed);
           dorqueRed.setVelocityY(100);
         }
+
+        if (this.score > 1200) {
+          if (!(Math.random() < 0.3)) return;
+          const dorquePurple = new Mob(
+            this,
+            Phaser.Math.Between(50, this.scale.width - 50),
+            y,
+            "dorquePurple",
+            30
+          );
+          this.mobGroup.add(dorquePurple);
+          dorquePurple.setVelocityY(160);
+        }
       },
     });
   }
 
   update(time, delta) {
+    this.stars.children.iterate((star) => {
+      star.y += star.speed;
+
+      if (star.y > this.scale.height) {
+        star.y = 0; // reset to top
+        star.x = Phaser.Math.Between(0, this.scale.width);
+      }
+    });
+
     this.observePlayerKeypress();
     this.playerFire();
     this.observeMobPassThrough();
   }
 
   gameOver() {
+    this.play("explosion")
     this.physics.pause();
     this.mobGroup.setVelocityY(0);
     this.projectileGroup.setVelocityY(0);
@@ -193,20 +223,14 @@ export class Game extends Phaser.Scene {
   }
 
   pauseGame() {
+    this.time.timeScale = 0;
     this.physics.pause();
-    this.spawnEvent.paused = true;
     this.showPauseText();
-    this.mobGroup.children.each((mob) => {
-      mob.setActive(false);
-    });
   }
   resumeGame() {
+    this.time.timeScale = 1;
     this.physics.resume();
-    this.spawnEvent.paused = false;
     this.pauseText.destroy();
-    this.mobGroup.children.each((mob) => {
-      mob.setActive(true);
-    });
   }
 
   showPauseText() {

@@ -27,7 +27,6 @@ export class Weapon {
   applyCooldownBoost(multiplier, duration) {
     this.cooldown = this.baseCooldown * multiplier;
 
-   
     console.log(`Attack Rate: ${this.cooldown}`);
 
     //reset
@@ -35,7 +34,7 @@ export class Weapon {
       this.cooldown = this.baseCooldown;
     });
 
-     console.log(`Attack Rate Reset: ${this.cooldown}`);
+    
   }
 
   applyDamageBoost(multiplier, duration) {

@@ -13,12 +13,20 @@ export class Preloader extends Phaser.Scene {
     this.load.image("life", "life.png");
     this.load.image("beam", "beam.png");
 
+    this.load.audio('explosion', 'sfx/explosion.wav');
+
+
     this.load.spritesheet("dorque", "Dorque.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
 
     this.load.spritesheet("dorqueRed", "DorqueRed.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("dorquePurple", "DorquePurple.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -70,6 +78,26 @@ export class Preloader extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: "dorquePurple_fly",
+      frames: this.anims.generateFrameNumbers("dorquePurple", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "dorquePurple_splat",
+      frames: this.anims.generateFrameNumbers("dorquePurple", {
+        start: 2,
+        end: 2,
+      }),
+      frameRate: 1,
+      repeat: 0,
+    });
+
+    this.anims.create({
       key: "velox_explode",
       frames: this.anims.generateFrameNumbers("velox_explode", {
         start: 0,
@@ -81,10 +109,16 @@ export class Preloader extends Phaser.Scene {
 
     this.anims.create({
       key: "nova_core",
-      frames: this.anims.generateFrameNumbers("nova_core", { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers("nova_core", {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 10,
       repeat: -1,
     });
+
+    this.laser = this.sound.add('explosion');
+
 
     this.scene.start("Game");
   }
