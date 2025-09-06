@@ -17,10 +17,18 @@ export class FireBlaster extends Weapon {
   }
 
   onFire(player) {
-    const fireBlast = this.scene.physics.add.sprite(player.x, player.y-50, "fireBlast");
+    const fireBlast = this.scene.physics.add.sprite(
+      player.x,
+      player.y - 50,
+      "fireBlast"
+    );
     fireBlast.damage = this.damage;
     this.scene.projectileGroup.add(fireBlast);
     fireBlast.setScale(0.09);
     fireBlast.setVelocityY(-500);
+
+    if (!this.scene.physics.world.isPaused) {
+      this.scene.sound.play("fire", { volume: 0.3 });
+    }
   }
 }

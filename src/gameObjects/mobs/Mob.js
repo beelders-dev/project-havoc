@@ -20,6 +20,7 @@ export class Mob extends Phaser.Physics.Arcade.Sprite {
  
     if (this.health <= 0) {
       this.setIsDead(true);
+      this.scene.sound.play("mobDeath");
       this.body.enable = false;
       this.setVelocity(0);
 

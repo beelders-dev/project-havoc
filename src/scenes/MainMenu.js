@@ -8,7 +8,7 @@ export class MainMenu extends Phaser.Scene {
   create() {
     const centerX = this.scale.width / 2;
     const centerY = this.scale.height / 2;
-
+   
     const heading = this.add
       .text(centerX, centerY - 50, "Project: H.A.V.O.C.", {
         fontSize: "50px",
@@ -45,6 +45,7 @@ export class MainMenu extends Phaser.Scene {
     this.spaceKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+    
   }
 
   update() {

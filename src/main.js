@@ -16,6 +16,11 @@ const config = {
       gravity: { y: 0 },
     },
   },
+
+  audio: {
+    disableWebAudio: false,
+  },
+
   scale: {
     mode: Phaser.Scale.LANDSCAPE,
     autoCenter: Phaser.Scale.CENTER_BOTH,

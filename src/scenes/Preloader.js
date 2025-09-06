@@ -13,8 +13,10 @@ export class Preloader extends Phaser.Scene {
     this.load.image("life", "life.png");
     this.load.image("beam", "beam.png");
 
-    this.load.audio('explosion', 'sfx/explosion.wav');
-
+    this.load.audio("explosion", "sfx/explosion.wav");
+    this.load.audio("fire", "sfx/fire_blast.wav");
+    this.load.audio("mobDeath", "sfx/mob_death.wav");
+    this.load.audio("powerUp", "sfx/power_up.wav");
 
     this.load.spritesheet("dorque", "Dorque.png", {
       frameWidth: 32,
@@ -117,8 +119,7 @@ export class Preloader extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.laser = this.sound.add('explosion');
-
+   
 
     this.scene.start("Game");
   }

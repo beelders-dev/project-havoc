@@ -7,52 +7,52 @@ export class Game extends Phaser.Scene {
     super("Game");
   }
 
-  create() {
-    // const bg = this.add.image(0, 0, "space").setOrigin(0, 0);
-    // bg.displayWidth = this.sys.canvas.width;
-    // bg.displayHeight = this.sys.canvas.height;
-
+  init() {
     const graphics = this.make.graphics({ x: 0, y: 0, add: false });
-    graphics.fillStyle(0xffffff, 1); 
-    graphics.fillCircle(1, 2, 2); 
-    graphics.generateTexture("star", 2, 2); 
+    graphics.fillStyle(0xffffff, 1);
+    graphics.fillCircle(1, 2, 2);
+    graphics.generateTexture("star", 2, 2);
 
     const stars = this.add.group({
       key: "star",
-      repeat: 50, // total stars = repeat + 1
-      setXY: { x: 0, y: 0, stepX: 8 }, // initial layout
+      repeat: 50,
+      setXY: { x: 0, y: 0, stepX: 8 },
     });
 
     stars.children.iterate((star) => {
       star.y = Phaser.Math.Between(0, this.scale.height);
       star.x = Phaser.Math.Between(0, this.scale.width);
-      star.speed = Phaser.Math.Between(0, 1); // pixels per frame
+      star.speed = Phaser.Math.Between(0, 1);
     });
 
-    this.stars = stars; // save group to access in update
+    this.stars = stars;
 
-    this.level = 1;
-    this.score = 0;
-    this.Y_AXIS = -50;
     this.scoreText = this.add.text(10, 10, "Score: 0", {
       fontSize: "16px",
       fill: "#fff",
     });
     this.scoreText.setFontFamily("'Press Start 2P'");
 
-    this.bottomRightText = this.add
-      .text(this.scale.width - 10, this.scale.height - 10, "P - Pause/Resume", {
+    this.bottomRightTexts = this.add
+      .text(this.scale.width - 10, this.scale.height - 10, ["P - Pause/Resume", "Right Arrow Key - Move Right", "Left Arrow Key - Move Left"], {
         fontSize: "16px",
         fill: "#fff",
       })
-      .setOrigin(1, 1);
+      .setOrigin(1, 1); 
+
+
 
     this.lives = 5;
     this.livesGroup = this.add.group();
     this.initPlayerLives();
 
-    this.pauseText;
+    this.score = 0;
+    this.Y_AXIS = -50;
 
+    this.pauseText;
+  }
+
+  create() {
     this.player = new Player(
       this,
       this.scale.width / 2,
@@ -73,7 +73,7 @@ export class Game extends Phaser.Scene {
 
     this.fireBlasterCollision();
 
-    this.beams = this.add.group();
+    this.explosionSFX = this.sound.add("explosion");
   }
 
   handleMobHitPlayer() {
@@ -129,7 +129,7 @@ export class Game extends Phaser.Scene {
     const y = this.Y_AXIS;
     const second = 30; //every 20 seconds
     this.spawnEvent = this.time.addEvent({
-      delay: 1000 * second,
+      delay: 1000 * 30,
 
       loop: true,
       callback: () => {
@@ -143,6 +143,7 @@ export class Game extends Phaser.Scene {
         core.setVelocityY(100);
 
         this.physics.add.overlap(core, this.player, () => {
+          this.sound.play("powerUp");
           core.applyEffect(this.player.fireBlaster);
           core.disableBody(true, true);
         });
@@ -212,7 +213,7 @@ export class Game extends Phaser.Scene {
   }
 
   gameOver() {
-    this.play("explosion")
+    this.explosionSFX.play();
     this.physics.pause();
     this.mobGroup.setVelocityY(0);
     this.projectileGroup.setVelocityY(0);

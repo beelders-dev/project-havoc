@@ -1,17 +1,15 @@
-export class Boot extends Phaser.Scene
-{
-    constructor ()
-    {
-        super('Boot');
-    }
+export class Boot extends Phaser.Scene {
+  constructor() {
+    super("Boot");
+  }
 
-    preload ()
-    {
-       
-    }
+  preload() {
+    this.load.setPath("assets");
+    this.load.audio("theme", "sfx/theme.wav");
+  }
 
-    create () 
-    {
-        this.scene.start('MainMenu');
-    }
+  create() {
+    // this.sound.play("theme", { loop: true });
+    this.scene.start("MainMenu");
+  }
 }
