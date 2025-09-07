@@ -1,5 +1,5 @@
 # Project H.A.V.O.C.
-#### Video Demo: https://studio.youtube.com/video/gde3GX8y5Is/edit
+#### Video Demo: [https://studio.youtube.com/video/gde3GX8y5Is/edit](https://youtu.be/gde3GX8y5Is?si=hDvPEsM6sRpAaNOW)
 #### Description:
 A retro shoot 'em up game inspired by NES classics and Nokia’s Space Impact. Built with Phaser and Vite, this project is my CS50 final project and my first attempt at using a game development library instead of just vanilla JavaScript.
 
