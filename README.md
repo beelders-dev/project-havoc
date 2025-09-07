@@ -1,0 +1,44 @@
+# Project H.A.V.O.C.
+#### Video Demo: https://studio.youtube.com/video/gde3GX8y5Is/edit
+#### Description:
+A retro shoot 'em up game inspired by NES classics and Nokia’s Space Impact. Built with Phaser and Vite, this project is my CS50 final project and my first attempt at using a game development library instead of just vanilla JavaScript.
+
+## How to Run
+1. Clone this repository  
+2. Install dependencies: `npm install`  
+3. Start the development server: `npm run dev`  
+4. Open http://localhost:5173 in your browser  
+
+## Controls
+- Left Arrow → Move left  
+- Right Arrow → Move right  
+- Spacebar → Shoot  
+- P → Pause and Resume  
+
+## Credits
+- Development tools: Vite for development, build, and deployment. Phaser for graphics, animation, and mechanics  
+- Sprites: piskelapp.com and Copilot  
+- SFX: 8bitcomposer.com  
+- Background and some assets: ChatGPT and Copilot  
+- Assistance: ChatGPT was used all throughout the project for ideas and debugging support  
+
+## Development Log
+**September 1 and 2**  
+I started learning Phaser and built the example game by following the tutorial from the documentation.  
+
+**Day 1: September 3**  
+At first, I thought of making a card game but then realized it would require too many images. So I went for a shoot 'em up instead, something similar to the retro NES games and the Nokia Space Impact game, but simpler. I set up the project with Vite and vanilla JS, installed the Phaser library, and generated the spacecraft sprite with Copilot. I named it Velox (Latin for speed). I also generated a galaxy background. By the end of the day, I had the ship moving left and right on the X axis with the arrow keys.  
+
+**Day 2: September 4**  
+I spent most of the day creating the Fire Blaster weapon. My first plan was to create an abstract class called Weapon and then create an Ammo class attached to it, but I realized this would be overkill since the ammo type will not change. So I focused on Weapon as an abstract class and made FireBlaster as a subclass. It took a lot of hours but eventually it could fire properly.  
+I also created my first mob sprite, Dorque, using Piskel. I learned how Phaser handles sprites and spritesheets, and how easy it is compared to vanilla JS. I worked on the collision system and discovered that overlap and collision are different in Phaser. I used overlap in this game. I also created the score system, which was surprisingly easy with Phaser.  
+
+**Day 3: September 5**  
+I wanted more enemy types so I made a variant of Dorque called Dorque Red. Instead of creating a whole new class, I just adjusted its stats (speed and HP) and changed the sprite slightly to show that it is stronger. I reduced its spawn rate to 20 percent using Math.random.  
+I also added pause and resume functionality. At first I thought using physics.pause() was enough but mobs kept spawning in the background, so when resuming, multiple mobs appeared at once. To fix this, I used Phaser’s timeScale, setting it to 0 when paused and back to 1 when resumed.  
+
+**Day 4: September 6**  
+I added another variant called Dorque Purple. I also created an item sprite that gives the player a temporary attack rate boost when picked up. I drew the sprite in Piskel and made it glow with Phaser’s Tweens. The player sprite also glows when the buff is active, and a text indicator appears on the top left until the buff expires. I added instructions for the controls on the bottom right. For the background, I switched to black and asked ChatGPT to generate star sprites with random speed, which made the game look more dynamic, like the ship was moving upward.  
+
+## Conclusion
+Making this game made me realize I really want to create more games. Last year I created a small guessing game called Monkey Boo using vanilla JavaScript, then recreated it in React with a backend for saving highscores. But Phaser really makes everything easier with scenes, game objects, sprites, and collisions. I still need to learn how to optimize for mobile, but I know Phaser supports it. For the future, I want to add a boss system, new weapons, skills, and also work on balancing the game.  
